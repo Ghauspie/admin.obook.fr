@@ -1,0 +1,61 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Project index{% endblock %}
+
+{% block body %}
+    <h1>Project index</h1>
+
+    <div>
+        {% include 'project/_filter.html.twig' with {form: form} only %}
+    </div>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Description</th>
+                <th>Prod_link</th>
+                <th>Git_link</th>
+                <th>Picture</th>
+                <th>Is_apotheose</th>
+                <th>Youtube_link</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for project in projects |slice(numberusernim, 10) %}
+            <tr>
+                <td>{{ project.id }}</td>
+                <td>{{ project.name }}</td>
+                <td>{{ project.description }}</td>
+                <td>{{ project.prodLink }}</td>
+                <td>{{ project.gitLink }}</td>
+                <td>{{ project.picture }} </br>
+      <img class="w-25" src="{{project.picture}}" alt="Logo of project"></td>
+                <td>{{ project.isApotheose ? 'Yes' : 'No' }}</td>
+                <td>{{ project.youtubeLink }}</td>
+                <td>
+                    <a href="{{ path('project_show', {'id': project.id}) }}">show</a>
+                    <a href="{{ path('project_edit', {'id': project.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="9">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    {% set i=1 %}
+    {%for i in i..countresult%}
+        {% if i==1 %}
+            <a href="{{path('project_index')}}?page={{i}}"> Start</a>
+        {%elseif i==countresult%}
+            <a href="{{path('project_index')}}?page={{i}}">End</a>
+        {% else %}
+            <a href="{{path('project_index')}}?page={{i}}"> page:{{i}}</a>
+        {%endif%}
+    {%endfor%}</br>
+    <a href="{{ path('project_new') }}">Create new</a>
+{% endblock %}

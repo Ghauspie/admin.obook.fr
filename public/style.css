@@ -1,0 +1,22 @@
+p.success{
+ color: darkgreen;
+ font-weight: bold;
+}
+p.echec{
+    color: red;
+}
+img.logo{
+    width: 25%;
+    height:25%;
+}
+.contact_col {
+ margin-left: 2%;
+}
+main {
+margin: 1% ;
+}
+td.videoapotheose{
+    display: flexbox;
+    flex-direction: row;
+    flex-wrap: wrap;
+}

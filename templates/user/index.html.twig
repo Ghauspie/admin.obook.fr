@@ -1,0 +1,91 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}User index{% endblock %}
+
+{% block body %}
+    <h1>User index</h1>
+
+<div>
+{% include 'user/_filter.html.twig' with {form: form} only %}
+</div>
+
+
+  <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Firstname</th>
+                <th>Lastname</th>
+                <th>Email</th>
+                <th>Story</th>
+                <th>Is_search_job</th>
+                <th>Roles</th>
+                <th>Picture</th>
+                {%if isSearchUser == 1%}
+                {%else%}
+                <th>Spe</th>
+                {%endif%}
+                <th>actions</th>
+
+            </tr>
+        </thead>
+        <tbody>
+
+        {% for user in users |slice(numberusernim, 10) %}
+
+            <tr>
+                <td>{{ user.id }}</td>
+                <td>{{ user.firstname }}</td>
+                <td>{{ user.lastname }}</td>
+                <td>{{ user.email }}</td>
+                <td>{{ user.story }}</td>
+                <td> {{ user.is_search_job ? 'Yes' : 'No' }}</td>
+              
+                {% if isSearchUser == 1 %}
+                <td> 
+                    {%if user.roles == []%}
+                          Pas de role
+                    {% else %}
+                        {%for role in user.roles%}
+                         {{role}} 
+                        {%endfor%}
+                    {% endif %}
+                </td>
+                {% else %}
+                <td>  {{ user.roles  }}              
+                {%endif%}</td>   
+                <td>{{ user.picture }}</br>
+                <img class="w-25" src="{{user.picture}}" alt="Logo of user">
+                </td>
+                 {%if isSearchUser == 1%}
+                 {%else%}
+                <td> {{user.speName}} </td>
+                {%endif%}
+                <td>
+                    <a href="{{ path('user_show', {'id': user.id}) }}">show</a>
+                    <a href="{{ path('user_edit', {'id': user.id}) }}">edit</a>
+                    <a href="{{path('user_delete', {'id':user.id}) }}">Delete</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="10">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    {% set i=1 %}
+    {%for i in i..countresult%}
+    {% if i==1 %}
+
+        <a href="{{path('user_index')}}?page={{i}}"> Start</a>
+    {%elseif i==countresult%}
+            <a href="{{path('user_index')}}?page={{i}}">End</a>
+    {% else %}
+    <a href="{{path('user_index')}}?page={{i}}"> page:{{i}}</a>
+    {%endif%}
+    {%endfor%}</br>
+    <a class="btn btn-primary" href="{{ path('user_new') }}" role="button">Create new</a>
+
+{% endblock %}

@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit Apotheose{% endblock %}
+
+{% block body %}
+    <h1>Edit Apotheose</h1>
+
+    {{ include('apotheose/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('apotheose_index') }}">back to list</a>
+
+    {{ include('apotheose/_delete_form.html.twig') }}
+{% endblock %}

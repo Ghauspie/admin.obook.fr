@@ -1,0 +1,42 @@
+
+{%block nav%}
+ <nav class="navbar navbar-expand-md navbar-dark bg-dark">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="{{ path('index_obook') }}">Obook.fr</a>
+
+            <div class="collapse navbar-collapse" id="navbarCollapse">
+                 <ul class="navbar-nav me-auto mb-2 mb-md-0">
+                <li class="nav-item">
+                    <a class="nav-link {% block menu_main %}{% endblock %}" href="{{ path('index_obook') }}">Acceuil</a> </li>
+                <li class="nav-item">
+                    <a class="nav-link {% block menu_user %}{% endblock %}" href="{{ path('user_index') }}">User</a></li>
+                <li class="nav-item">
+                    <a class="nav-link {% block menu_project %}{% endblock %}" href="{{ path('project_index') }}">Projets</a></li>
+                <li class="nav-item">
+                    <a class="nav-link {% block menu_team %}{% endblock %}" href="{{ path('team') }}">Teams</a></li>
+                <li class="nav-item">
+                    <a class="nav-link {% block menu_techno %}{% endblock %}" href="{{ path('techno_index') }}">Techno</a></li>
+                <li class="nav-item">
+                    <a class="nav-link {% block menu_spe %}{% endblock %}" href="{{ path('spe_index') }}">Spe</a></li>
+                <li class="nav-item">
+                    <a class="nav-link {% block menu_contrat %}{% endblock %}" href="{{ path('contrat') }}">Contrat</a>
+                    </li>  <li class="nav-item">
+                    <a class="nav-link {% block menu_apotheose %}{% endblock %}" href="{{ path('apotheose_index') }}">Apothéose</a></li>
+                    <li class="nav-item">
+                    <a class="nav-link {% block menu_contact %}{% endblock %}" href="{{ path('contact') }}">Contacter l'admin serveur</a></li>
+                </ul>apotheose_index
+          </div>contact
+   
+            {% if app.user %}
+        <div class="mb-3">
+            <a class="navbar-brand" href="{{ path('app_logout') }}">Logout</a>
+        </div>
+        {%else%}
+                <div class="mb-3">
+            <a class="navbar-brand" href="{{ path('app_login') }}">Login</a>
+        </div>
+    {% endif %}
+   
+          </div>
+    </nav>
+    {%endblock%}

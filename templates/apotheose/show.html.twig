@@ -1,0 +1,45 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Apotheose{% endblock %}
+
+{% block body %}
+    <h1>Apotheose</h1> 
+    <table class="table">
+        <tbody>
+            <tr>
+                <th class="w-25">Id</th>
+                <td class="w-75">{{ apotheose.id }}</td>
+            </tr>
+            <tr>
+                <th class="w-25">Promo</th>
+                <td class="w-75">{{ apotheose.promo }}</td>
+            </tr>
+            <tr>
+                <th class="w-25">Description</th>
+                <td class="w-75">{{ apotheose.description }}</td>
+            </tr>
+            <tr>
+                <th class="w-25">CreatedAt</th>
+                <td class="w-75">{{ apotheose.createdAt ? apotheose.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th class="w-25">Is_publish</th>
+                <td class="w-75">{{ apotheose.isPublish ? 'Yes' : 'No' }}</td>
+            </tr>
+            <tr>
+                <th class="w-25">liste des url </th>               
+                <td class="w-75 videoapotheose"> {% for url in urllist %}
+                <div>adresse:{{url.url}} </br>
+                <iframe width=48% height=48% src={{url.url}} title="YouTube video player of Apotheose" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                 </div>
+                {% endfor %}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('apotheose_index') }}">back to list</a>
+
+    <a href="{{ path('apotheose_edit', {'id': apotheose.id}) }}">edit</a>
+
+    {{ include('apotheose/_delete_form.html.twig') }}
+{% endblock %}

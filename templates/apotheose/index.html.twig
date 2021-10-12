@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Apotheose index{% endblock %}
+
+{% block body %}
+    <h1>Apotheose index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Promo</th>
+                <th>Description</th>
+                <th>CreatedAt</th>
+                <th>Is_publish</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for apotheose in apotheoses %}
+            <tr>
+                <td>{{ apotheose.id }}</td>
+                <td>{{ apotheose.promo }}</td>
+                <td>{{ apotheose.description }}</td>
+                <td>{{ apotheose.createdAt ? apotheose.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ apotheose.isPublish ? 'Yes' : 'No' }}</td>
+                <td>
+                    <a href="{{ path('apotheose_show', {'id': apotheose.id}) }}">show</a>
+                    <a href="{{ path('apotheose_edit', {'id': apotheose.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="6">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('apotheose_new') }}">Create new Apothéose</a> 
+     <a href="{{ path('url_apotheose_new') }}">Create new URl</a>
+     <a href="{{ path('url_apotheose_index') }}">Index Url</a>
+{% endblock %}

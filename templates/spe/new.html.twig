@@ -1,0 +1,12 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Spe{% endblock %}
+
+{% block body %}
+    <h1>Create new Spe</h1>
+    {{dump(spe)}}
+    
+    {{ include('spe/_form.html.twig') }}
+
+    <a href="{{ path('spe_index') }}">back to list</a>
+{% endblock %}

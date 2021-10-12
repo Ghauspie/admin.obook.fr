@@ -1,0 +1,46 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Welcome in administration of obook.fr{% endblock %}
+
+{% block body %}
+   
+    <h1> Obook  </h1>
+   <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Id Project</th>
+                <th>Name of project</th>
+                <th>ID User</th>
+                <th>Nom de l'utilisateur</th>
+                <th>La demande d'ajout a l'équipe est t'elle valide ?Valid</th>
+                <th>actions</th>
+
+            </tr>
+        </thead>
+        <tbody>
+        {% for Team in Teams %}
+            <tr>
+                <td>{{Team.id}}</td>
+                <td>{{Team.project_id}}</td>
+                <td>{{Team.name}}</td>
+                <td>{{Team.userId}}</td>
+                <td>{{Team.lastname}} {{Team.username}}</td>
+                <td> {{ Team.is_valid ? 'Yes' : 'No' }}</td>
+                <td>
+                    <a href="{{ path('team_delete', {'id': Team.id}) }}">Delete</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="10">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+</div>
+  <a href="{{ path('team_new') }}">Create new</a>
+
+<div>  
+{% endblock %}

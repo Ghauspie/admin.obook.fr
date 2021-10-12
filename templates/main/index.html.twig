@@ -1,0 +1,59 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Obook.fr administration!{% endblock %}
+
+{% block body %}
+   
+    <h1> Obook  </h1>
+
+<div class=" d-flex ">
+    <div>
+        <h2>Bienvenus sur le site d'administration d'obook.fr</h2>
+
+        <p>Ce site vous permettra de gère les différentes parties du site tels que: <br>
+        - contrat <br>
+        - les projets <br>
+        - les teams<br>
+        - Les spe <br>
+        - Les utilisateurs (dans un souci de respect de RGPD vous n'avez pas acces à l'edition des mots de passe) <br>
+        - Les techno <br>
+        - l'apothéose mis en avant. Pour l'url des video n'oubliez pas que votre url doit etre de ce type <em><b>"https://www.youtube.com/embed/rDUrb9VLdFA"</b></em><br>
+  
+    </div>
+           {% if is_granted('ROLE_ADMIN') %}  
+    <div class="container w-50"> 
+        <iframe title="monitoring" class="w-100 h-100" src="https://obook.fr"></iframe>
+    </div>
+
+    </div>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Etat site</th>
+                <th>Etat serveur</th>
+                <th>Etat BDD</th>
+            </tr>
+        </thead>
+        <tbody>
+        <tr>
+         {%for monitoring  in test %}
+          <td> 
+            {% if monitoring.ResultatMonitoring == true %}
+                <p class="success"> {{monitoring.Text}}</br>
+                <img class="logo" src="/picture/Okk.png" alt="Site ok"></p>
+            {%else%}
+                <p class="echec"> {{monitoring.Text}} </br>
+                <img class="logo" src="/picture/echec.png" alt="Site Nok"></p>
+            {%endif%}
+           </td>
+        {%endfor%}
+        </tr>
+
+    
+        </tbody>
+        </table>
+   {%endif%}  
+
+{% endblock %}
+
+

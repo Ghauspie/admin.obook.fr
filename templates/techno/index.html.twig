@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Techno index{% endblock %}
+
+{% block body %}
+    <h1>Techno index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Logo</th>
+                <th>Is_valid</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for techno in technos %}
+            <tr>
+                <td>{{ techno.id }}</td>
+                <td>{{ techno.name }}</td>
+                <td>{{ techno.logo }}
+                </br>
+                <img class="Logo" src="{{techno.logo}}" alt="Logo of techno"></td>
+                <td>{{ techno.isValid ? 'Yes' : 'No' }}</td>
+                <td>
+                    <a href="{{ path('techno_show', {'id': techno.id}) }}">show</a>
+                    <a href="{{ path('techno_edit', {'id': techno.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="5">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('techno_new') }}">Create new</a>
+{% endblock %}

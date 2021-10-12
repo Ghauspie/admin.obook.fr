@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New UrlApotheose{% endblock %}
+
+{% block body %}
+    <h1>Create new UrlApotheose</h1>
+
+    {{ include('url_apotheose/_form.html.twig') }}
+
+    <a href="{{ path('url_apotheose_index') }}">back to list</a>
+{% endblock %}

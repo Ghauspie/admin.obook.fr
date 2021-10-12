@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+<h1> Contacter l'admin systeme</h1>
+<p> un soucis sur l'hebergement du site ou de la bdd contactez votre amies l'admin sys </p>
+
+  {{ form_start(form) }}
+        {{ form_errors(form) }}
+        <div>
+            {{ form_row(form.nom) }}
+
+            {{ form_row(form.email) }}
+        </div>
+               <div class="col" id="some-custom-id">
+            {{ form_row(form.message) }}
+        </div>
+
+  {{ include('contact/_form.html.twig', {'button_label': 'Send me'}) }}
+  {{ form_end(form) }}
+
+
+{% endblock %}

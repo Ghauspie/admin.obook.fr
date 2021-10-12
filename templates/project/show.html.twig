@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Projet : {{project.name}}{% endblock %}
+
+{% block body %}
+    <h1>Projet : {{project.name}}</h1>
+<div class="card">
+  <div class="card-image">
+    <figure class="image is-4by3 w-25">
+      <img src="{{project.picture}}" alt="Logo of project">
+    </figure>
+  </div>
+  <div class="card-content">
+    <div class="media">
+      <div class="media-left">
+        <p class="title is-4">{{project.name}}</p>
+        <p class="subtitle is-6">L'id du project est le {{project.id}} </p>
+      </div>
+      <div class="media-content ">
+        <p> Le projet est constitué de : </br>
+              {% for user in users %}
+                -{{ user.lastname }} {{user.firstname}} </br>
+                {% endfor %}
+      </div>
+    </div>
+
+    <div class="content">
+    {{project.description}}
+      <br>
+
+    </div>
+  </div>
+</div>
+    <a href="{{ path('project_index') }}">back to list</a>
+    <a href="{{ path('team_new') }}">Add user</a>
+    <a href="{{ path('project_edit', {'id': project.id}) }}">edit</a>
+
+    {{ include('project/_delete_form.html.twig') }}
+{% endblock %}
