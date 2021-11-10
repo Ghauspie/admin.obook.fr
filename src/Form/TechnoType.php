@@ -15,10 +15,7 @@ class TechnoType extends AbstractType
     {
         $builder
             ->add('name')
-            ->add('logo',FileType::class, [
-                'label' => false,
-                'mapped' => false,
-            ])
+            ->add('logo')
             ->add('is_valid');
     }
 

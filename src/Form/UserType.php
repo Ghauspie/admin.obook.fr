@@ -22,10 +22,12 @@ use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\UrlType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
 
 class UserType extends AbstractType
 {
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options) :void
     {
         $builder
             ->add(
@@ -77,24 +79,32 @@ class UserType extends AbstractType
 
                 ]
             )
-            ->add(
-                'password', PasswordType::class, [
-
-                'attr'=> [
-                    'placeholder'=> 'Description de l\'Apotheose',
-                    'class'=>'form-control'
-                ]
-
-                  ]
-            )  
+           ->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) 
+           {
+                // ... adding the name field if needed
+                $user= $event->getData();
+                $form =$event->getForm();
+                if ($_SERVER['REQUEST_URI']=="/user/new")
+                {
+                    $form->add('password', PasswordType::class,
+                    [
+                    'attr'=> 
+                        [
+                        'placeholder'=> 'Description de l\'Apotheose',
+                        'class'=>'form-control'
+                        ],
+                        ]
+                );
+               };
+            })
+        
+            
             ->add(
                 'picture', UrlType::class, [
-
                 'attr'=> [
                     'placeholder'=> 'Description de l\'Apotheose',
                     'class'=>'form-control'
                 ]
-
                 ]
             )
             ->add(
