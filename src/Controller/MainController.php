@@ -41,6 +41,7 @@ class MainController extends AbstractController
             $existsBDD = true;
         }; */
         
+        
         $monitoring=$monitoring->monitoring();
         return $this->render(
             'main/index.html.twig', [

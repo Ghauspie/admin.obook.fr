@@ -45,6 +45,7 @@
         "twig/twig": "^2.12|^3.0"
     },
     "require-dev": {
+        "doctrine/doctrine-fixtures-bundle": "^3.4",
         "phploc/phploc": "^7.0",
         "phpmd/phpmd": "^2.10",
         "phpunit/phpunit": "^9.5",

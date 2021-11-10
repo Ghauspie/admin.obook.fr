@@ -28,7 +28,7 @@ class Monitoring
           $textservobook='Le serveur du site est en ligne';
         };
 
-        $BDD='https://julienv10.sg-host.com/api/doc';
+        $BDD='https://obook.julien-vital.dev/api/doc';
         $file_headersBDD= @get_headers($BDD);
         if(!$file_headersBDD || $file_headersBDD[0] == 'HTTP/1.1 404 Not Found') {
             $bddobook = false;
@@ -57,3 +57,4 @@ class Monitoring
         ];
     }
 }
+?>
