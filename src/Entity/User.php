@@ -88,7 +88,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     public function __construct()
     {
-        $this->roles = new ArrayCollection();
+        /* $this->roles = new ArrayCollection(); */
         $this->technos = new ArrayCollection();
         $this->contrats = new ArrayCollection();
         $this->teams = new ArrayCollection();
@@ -194,7 +194,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         $roles = $this->roles;
         // guarantee every user at least has ROLE_USER
-
         /*     if (empty($roles)) {
             $roles[]='ROLE_USER';
         } ; */

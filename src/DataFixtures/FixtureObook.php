@@ -16,10 +16,10 @@ class FixtureObook extends Fixture
 {
     private $passwordEncoder;
 
-    public function __construct(UserPasswordEncoderInterface $passwordEncoder, PictureService $pictureService)
+    public function __construct(UserPasswordEncoderInterface $passwordEncoder, /* PictureService $pictureService */)
     {
         $this->passwordEncoder = $passwordEncoder;
-        $this->pictureService = $pictureService;
+        /* $this->pictureService = $pictureService; */
     }
 
     public function load(ObjectManager $manager)

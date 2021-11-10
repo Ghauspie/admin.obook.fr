@@ -38,6 +38,8 @@ class TechnoController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager = $this->getDoctrine()->getManager();
+            $picture= $techno->getLogo();
+            dd($techno->getLogo());
             $entityManager->persist($techno);
             $entityManager->flush();
            

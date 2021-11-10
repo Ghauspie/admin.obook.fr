@@ -124,17 +124,25 @@ class UserController extends AbstractController
     {
         $user = new User();
         $form = $this->createForm(UserType::class, $user);
-        $form->handleRequest($request);
-
+        $form->handleRequest($request);    
         // $spe_id=$user->getSpeId();
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager = $this->getDoctrine()->getManager();
             $data =$form->getData();
+            $params= $request->request->all();
              //on recupere l'infos du roles et on le serialize pour etre au format json afin de pouvoir faire le set
-             $userol=$data->getRoles1();
-             $jsonrole= $serializer->serialize($userol,'json');
+             $requestrole=$params['user']['roles'];
+             if ($requestrole == '1') {
+                 $role=array('ROLE_ADMIN');
+                 $user->setRoles1($role);
+             }
+             else {
+                 $role =array('ROLE_USER');
+                 $user->setRoles1($role);
+             };
+/*              $jsonrole= $serializer->serialize($userol,'json');
                      
-             $roleu=json_decode($jsonrole);
+             $roleu=json_decode($jsonrole); */
 
             $pass=$data->getPassword();
             // Récupération des data technos dans la request
@@ -146,7 +154,7 @@ class UserController extends AbstractController
             // $spe=$user.spe_id;
             // $user->setSpeId($spe);
             $user->setPassword($encoder->encodePassword($user, $pass));
-            $user->setRoles($roleu); 
+            /* $user->setRoles($roleu); */ 
             $entityManager->persist($user);
             if (!empty($datatechno)) {
                 $technousers=[];
@@ -284,8 +292,6 @@ class UserController extends AbstractController
                 $entityManager->persist($role);
             }   */
             
-
- 
             $entityManager->persist($user);
 
             // on verifie que datatechno n'est pas null
