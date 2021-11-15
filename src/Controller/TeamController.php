@@ -19,7 +19,7 @@ class TeamController extends AbstractController
      */
     public function index(TeamRepository $teamRepository): Response
     {
-        $teams=$teamRepository->findAll();
+        
         $em = $this->getDoctrine()->getManager();
         $RAW_QUERY = 'select user.firstname as username,user.id as userId, user.lastname as lastname, project.id as project_id, 
         project.description as description, project.picture as picture, project.name as name, team.is_valid, team.id

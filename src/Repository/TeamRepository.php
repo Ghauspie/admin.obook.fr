@@ -52,7 +52,7 @@ class TeamRepository extends ServiceEntityRepository
     /*
     // Ici on créer le DQL permettant de liste tout les projets avec par projet son nom, sa decription, l'image du projet et la liste de tout les utilisateur du projet
     */
-    public function findTeamAll(): ?Team
+    public function findTeamAll()
     {
         return $this->getEntityManager()
             ->createQuery(

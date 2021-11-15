@@ -59,7 +59,7 @@ class UserController extends AbstractController
 
             $countresult= count($result);
             $numberpagedisplay= $countresult/10; // on recupere le resultat 
-            $numberpagedisplay=($numberpagedisplay%5)+1;// ici on fait un modulo de 5 du resultat pour obtenir un chiffre pile de plus on rajouter 1 pour eviter de perdre des profils
+            $numberpagedisplay=($numberpagedisplay%5)+1;// ici on fait un modulo de 5 du resultat pour obtenir un chiffre pile, de plus on rajouter 1 pour eviter de perdre des profils
             if($currentPage==1){
                 $numberusernim=0;
 

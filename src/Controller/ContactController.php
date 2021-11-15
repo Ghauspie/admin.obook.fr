@@ -51,7 +51,7 @@ class ContactController extends AbstractController
                 
                 <a href="https://zupimages.net/viewer.php?id=21/33/8pc6.png"><img src="https://zupimages.net/up/21/33/8pc6.png" alt="Obook logo" /></a>
                 <h1> Obook monitoring alerte</h1></br>
-                <p>Un probleme à était detecté sur le serveur ou la bdd</p></br>
+                <p>Un probleme à été detecté sur le serveur ou la bdd</p></br>
                 <p>'.$textmessage.'</p>
                 </body>
                 </html>'

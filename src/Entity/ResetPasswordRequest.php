@@ -57,7 +57,7 @@ class ResetPasswordRequest implements ResetPasswordRequestInterface
         return $this->user;
     }
 
-    public function getCreatedAt(): ?\DateTimeImmutable
+    public function getCreatedAt()/*:  ?\DateTimeImmutable */
     {
         return $this->CreatedAt;
     }
