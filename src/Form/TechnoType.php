@@ -3,7 +3,9 @@
 namespace App\Form;
 
 use App\Entity\Techno;
+use App\Service\PictureService;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -13,7 +15,7 @@ class TechnoType extends AbstractType
     {
         $builder
             ->add('name')
-            ->add('logo')
+            ->add('logo', FileType::class , array('data_class' => null))
             ->add('is_valid');
     }
 

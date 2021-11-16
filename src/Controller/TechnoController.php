@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Techno;
 use App\Form\TechnoType;
 use App\Repository\TechnoRepository;
+use App\Service\PictureService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -74,8 +75,14 @@ class TechnoController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $data=$form->getData();
+            $urllogo=$data->getLogo();
             $this->getDoctrine()->getManager()->flush();
-
+            $picture=[];
+            $picture=(explode('\\',$urllogo));
+            $urlpicture=array_pop($picture);
+            $urlpicture->move($urlpicture, "https://obook.julien-vital.dev/upload/".$urlpicture);
+            
             return $this->redirectToRoute('techno_index', [], Response::HTTP_SEE_OTHER);
         }
 

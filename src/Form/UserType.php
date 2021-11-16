@@ -77,7 +77,7 @@ class UserType extends AbstractType
 
                 ]
             )
-            ->add(
+/*             ->add(
                 'password', PasswordType::class, [
 
                 'attr'=> [
@@ -86,7 +86,7 @@ class UserType extends AbstractType
                 ]
 
                   ]
-            )  
+            )   */
             ->add(
                 'picture', UrlType::class, [
 
