@@ -25,8 +25,8 @@ class ContactController extends AbstractController
             $textmessage=$contactFormData['message'];
             $emailcontact=$contactFormData['email'];
             $email = (new Email())
-                ->from('admin@obook.fr')
-                ->to($emailcontact)
+                ->from($emailcontact)
+                ->to('contact@obook.fr')
                 //->cc('cc@example.com')
                 //->bcc('bcc@example.com')
                 //->replyTo('fabien@example.com')
@@ -51,7 +51,7 @@ class ContactController extends AbstractController
                 
                 <a href="https://zupimages.net/viewer.php?id=21/33/8pc6.png"><img src="https://zupimages.net/up/21/33/8pc6.png" alt="Obook logo" /></a>
                 <h1> Obook monitoring alerte</h1></br>
-                <p>Un probleme à était detecté sur le serveur ou la bdd</p></br>
+                <p>Un probleme à été detecté sur le serveur ou la bdd</p></br>
                 <p>'.$textmessage.'</p>
                 </body>
                 </html>'
