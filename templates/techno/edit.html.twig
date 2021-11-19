@@ -4,7 +4,11 @@
 
 {% block body %}
     <h1>Edit Techno</h1>
-
+    {% if alertepicture != null  %}
+    <div class="alert alert-danger">
+  {{ alertepicture }}
+    </div>
+    {% endif %}
     {{ include('techno/_form.html.twig', {'button_label': 'Update'}) }}
 
     <a href="{{ path('techno_index') }}">back to list</a>

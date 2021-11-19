@@ -6,10 +6,12 @@ use App\Entity\Techno;
 use App\Form\TechnoType;
 use App\Repository\TechnoRepository;
 use App\Service\PictureService;
+use PhpParser\Node\Name;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+
 
 /**
  * @Route("/techno")
@@ -76,20 +78,44 @@ class TechnoController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $data=$form->getData();
-            $urllogo=$data->getLogo();
-            $this->getDoctrine()->getManager()->flush();
+            $urllogo= $_FILES['techno']['name']['logo'];
+            //old version qui récupère  le fichier renommer par wamp
+            /* $urllogo=$data->getLogo(); */
+            
+            $entityManager=$this->getDoctrine()->getManager();
             $picture=[];
             $picture=(explode('\\',$urllogo));
             $urlpicture=array_pop($picture);
-            $urlpicture->move($urlpicture, "https://obook.julien-vital.dev/upload/".$urlpicture);
-            
-            return $this->redirectToRoute('techno_index', [], Response::HTTP_SEE_OTHER);
+           
+            //on vérifie que le fichier contient l'extension .png, ou .jpeg ou .svg
+            if (strpos($urlpicture,".png")) {
+                move_uploaded_file("https://obook.julien-vital.dev/upload/", $urlpicture);
+                $techno->setLogo("https://obook.julien-vital.dev/upload/".$urlpicture);
+                $entityManager->persist($techno);
+                $entityManager->flush(); 
+                return $this->redirectToRoute('techno_index', [], Response::HTTP_SEE_OTHER);
+            }
+            else {
+                 $alertepicture= "LE format de l'image n'est pas correct veuillez postez une image au format .png, .SVG, .jpg";
+
+                return $this->renderForm(
+                    'techno/edit.html.twig', [
+                    'techno' => $techno,
+                    'form' => $form,
+                    'alertepicture'=>$alertepicture,
+                    ]
+                );
+            }
+           
+
+                        return $this->redirectToRoute('techno_index', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm(
             'techno/edit.html.twig', [
             'techno' => $techno,
             'form' => $form,
+            'alertepicture'=>"",
             ]
         );
     }
