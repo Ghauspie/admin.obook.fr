@@ -6,6 +6,7 @@ use App\Entity\Techno;
 use App\Form\TechnoType;
 use App\Repository\TechnoRepository;
 use App\Service\PictureService;
+use Doctrine\ORM\Mapping\Id;
 use PhpParser\Node\Name;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -41,20 +42,53 @@ class TechnoController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($techno);
-            $entityManager->flush();
-           
-            return $this->redirectToRoute('techno_index');
-        }
+            $urllogo= $_FILES['techno']['name']['logo'];
+            $picture=[];
+            $picture=(explode('\\',$urllogo));
+            $urlpicture=array_pop($picture);
+            //on vérifie que le fichier contient l'extension .png, ou .jpeg ou .svg
+            if (strpos($urlpicture,".png") ||strpos($urlpicture,".jpeg") || strpos($urlpicture,".svg")) 
+            {
+                move_uploaded_file( "https://obook.julien-vital.dev/upload/", $urlpicture);
+                $techno->setLogo("https://obook.julien-vital.dev/upload/".$urlpicture);
+                if (file_exists("https://obook.julien-vital.dev/upload/".$urlpicture)) {
+                    $entityManager->persist($techno);
+                    $entityManager->flush(); 
+                    return $this->redirectToRoute('techno_index', [], Response::HTTP_SEE_OTHER);
+                } 
+                else {
+                    $alertepicture= "L'image n'a pas été télécharger";
+
+                    return $this->renderForm(
+                        'techno/edit.html.twig', [
+                        'techno' => $techno,
+                        'form' => $form,
+                        'alertepicture'=>$alertepicture,
+                        ]
+                    ); 
+                }
+            }
+            else {
+                    $alertepicture= "Le format de l'image n'est pas correct veuillez postez une image au format .png, .SVG, .jpg";
+
+                return $this->renderForm(
+                    'techno/edit.html.twig', [
+                    'techno' => $techno,
+                    'form' => $form,
+                    'alertepicture'=>$alertepicture,
+                    ]
+                );
+            }
+        
         
         return $this->renderForm(
             'techno/new.html.twig', [
             'techno' => $techno,
             'form' => $form,
-            
             ]
         );
     }
+}
 
     /**
      * @Route("/{id}", name="techno_show", methods={"GET"})
@@ -75,9 +109,10 @@ class TechnoController extends AbstractController
     {
         $form = $this->createForm(TechnoType::class, $techno);
         $form->handleRequest($request);
-
+        $logoOrigine=$techno->getLogo();
+        
         if ($form->isSubmitted() && $form->isValid()) {
-            $data=$form->getData();
+            /* $data=$form->getData(); */
             $urllogo= $_FILES['techno']['name']['logo'];
             //old version qui récupère  le fichier renommer par wamp
             /* $urllogo=$data->getLogo(); */
@@ -86,29 +121,49 @@ class TechnoController extends AbstractController
             $picture=[];
             $picture=(explode('\\',$urllogo));
             $urlpicture=array_pop($picture);
-           
-            //on vérifie que le fichier contient l'extension .png, ou .jpeg ou .svg
-            if (strpos($urlpicture,".png")) {
-                move_uploaded_file("https://obook.julien-vital.dev/upload/", $urlpicture);
-                $techno->setLogo("https://obook.julien-vital.dev/upload/".$urlpicture);
+           //Ici on verifier qu'il a bien une modification du champ logo 
+           //pour savoir si on telecharge l'image ou non
+            if ($logoOrigine <> "https://obook.julien-vital.dev/upload/".$urlpicture)
+                {                  
+                //on vérifie que le fichier contient l'extension .png, ou .jpeg ou .svg
+                if (strpos($urlpicture,".png") ||strpos($urlpicture,".jpeg") || strpos($urlpicture,".svg")) {
+                    move_uploaded_file("https://obook.julien-vital.dev/upload/", $urlpicture);
+                    $techno->setLogo("https://obook.julien-vital.dev/upload/".$urlpicture);
+                    if (file_exists("https://obook.julien-vital.dev/upload/".$urlpicture)) {
+                        $entityManager->persist($techno);
+                        $entityManager->flush(); 
+                        return $this->redirectToRoute('techno_index', [], Response::HTTP_SEE_OTHER);
+                    } else {
+                        $alertepicture= "L'image n'a pas été télécharger";
+
+                        return $this->renderForm(
+                            'techno/edit.html.twig', [
+                            'techno' => $techno,
+                            'form' => $form,
+                            'alertepicture'=>$alertepicture,
+                            ]
+                        ); 
+                    }
+                    $entityManager->persist($techno);
+                    $entityManager->flush(); 
+                    return $this->redirectToRoute('techno_index', [], Response::HTTP_SEE_OTHER);
+                }
+                else {
+                     $alertepicture= "Le format de l'image n'est pas correct veuillez postez une image au format .png, .SVG, .jpg";
+
+                    return $this->renderForm(
+                        'techno/edit.html.twig', [
+                        'techno' => $techno,
+                        'form' => $form,
+                        'alertepicture'=>$alertepicture,
+                        ]
+                    );
+                    }
+                }
+                
                 $entityManager->persist($techno);
                 $entityManager->flush(); 
                 return $this->redirectToRoute('techno_index', [], Response::HTTP_SEE_OTHER);
-            }
-            else {
-                 $alertepicture= "LE format de l'image n'est pas correct veuillez postez une image au format .png, .SVG, .jpg";
-
-                return $this->renderForm(
-                    'techno/edit.html.twig', [
-                    'techno' => $techno,
-                    'form' => $form,
-                    'alertepicture'=>$alertepicture,
-                    ]
-                );
-            }
-           
-
-                        return $this->redirectToRoute('techno_index', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm(
